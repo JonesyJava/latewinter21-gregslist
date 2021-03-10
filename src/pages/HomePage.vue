@@ -1,8 +1,8 @@
 <template>
   <div class="home container">
     <div class="row mt-5">
-      <div class="col">
-        <h1>Welcome to Gregslist please select your collection to look at</h1>
+      <div class="col text-center">
+        <h1>Welcome to Gregslist the collection you would like to <img alt="Vue logo" src="../assets/logo.png" /> iew</h1>
       </div>
     </div>
     <div class="row mt-5">
@@ -23,12 +23,15 @@ export default {
   setup() {
     const state = reactive({})
     return {
-      methodName() {
-
-      }
+      state
     }
   },
   components: {
   }
 }
 </script>
+<style scoped>
+img {
+  height: 1em;
+}
+</style>

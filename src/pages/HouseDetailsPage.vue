@@ -1,34 +1,45 @@
 <template>
-  <div class="car-details">
+  <div class="house-details">
     <h1>Welcome to the details page</h1>
-    {{ state.car }}
-    <button type="button" class="btn btn-outline-danger" @click="deleteCar">
-      Delete Car
+    {{ state.house }}
+    <button type="button" class="btn btn-outline-danger" @click="deleteHouse">
+      Delete House
     </button>
 
-    <form class="form-inline" onsubmit="app.carsController.createCar(event)">
+    <form class="form-inline" onsubmit="app.housesController.createHouse(event)">
       <div class="form-group">
         <input
-          type="text"
-          name="make"
-          id="make"
-          class="form-control"
-          placeholder="Make"
-          aria-describedby="helpId"
-          v-model="state.car.make"
+            type="number"
+            name="bedrooms"
+            id="bedrooms"
+            class="form-control"
+            placeholder="Bedrooms"
+            aria-describedby="helpId"
+            v-model="state.house.bedrooms"
         />
       </div>
       <div class="form-group">
         <input
-          type="text"
-          name="model"
-          id="model"
+          type="number"
+          name="bathrooms"
+          id="bathrooms"
           class="form-control"
-          placeholder="Model"
+          placeholder="Bathrooms"
           aria-describedby="helpId"
-          v-model="state.car.model"
+          v-model="state.house.bathrooms"
         />
       </div>
+      <div class="form-group">
+          <input
+            type="number"
+            name="levels"
+            id="levels"
+            class="form-control"
+            placeholder="Levels"
+            aria-describedby="helpId"
+            v-model="state.house.levels"
+          />
+        </div>
       <div class="form-group">
         <input
           type="number"
@@ -37,7 +48,7 @@
           class="form-control"
           placeholder="Year"
           aria-describedby="helpId"
-          v-model="state.car.year"
+          v-model="state.house.year"
         />
       </div>
       <div class="form-group">
@@ -48,7 +59,7 @@
           class="form-control"
           placeholder="Price"
           aria-describedby="helpId"
-          v-model="state.car.price"
+          v-model="state.house.price"
         />
       </div>
       <div class="form-group">
@@ -59,7 +70,7 @@
           class="form-control"
           placeholder="Description"
           aria-describedby="helpId"
-          v-model="state.car.description"
+          v-model="state.house.description"
         />
       </div>
       <div class="form-group">
@@ -70,7 +81,7 @@
           class="form-control"
           placeholder="ImgUrl"
           aria-describedby="helpId"
-          v-model="state.car.imgUrl"
+          v-model="state.house.imgUrl"
         />
       </div>
       <button class="btn btn-info" type="submit">Create</button>
@@ -81,25 +92,25 @@
 <script>
 import { onMounted, reactive, computed } from 'vue'
 import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
-import { carsService } from '../services/CarsService'
+import { housesService } from '../services/HousesService'
 import { AppState } from '../Appstate'
 
 export default {
-  name: 'CarDetails',
+  name: 'HouseDetails',
   setup() {
     const route = useRoute()
     const router = useRouter()
     const state = reactive({
-      car: computed(() => AppState.activeCar)
+      house: computed(() => AppState.activeHouse)
     })
 
     onMounted(() => {
-      carsService.getCar(route.params.id)
+      housesService.getHouse(route.params.id)
     })
 
     onBeforeRouteLeave((to, from, next) => {
       if (window.confirm('You sure bro?')) {
-        AppState.activeCar = {}
+        AppState.activeHouse = {}
         next()
       }
     })
@@ -107,9 +118,9 @@ export default {
     return {
       route,
       state,
-      async deleteCar() {
-        await carsService.deleteCar(state.car._id)
-        router.push({ name: 'Cars' })
+      async deleteHouse() {
+        await housesService.deleteHouse(state.house._id)
+        router.push({ name: 'Houses' })
       }
     }
   },
